@@ -62,7 +62,8 @@ public class GstUnityBridgePipeline
         [MarshalAs(UnmanagedType.LPStr)]string net_clock_address,
         int net_clock_port,
         ulong basetime,
-        float crop_left, float crop_top, float crop_right, float crop_bottom);
+        float crop_left, float crop_top, float crop_right, float crop_bottom,
+        int useudpsrc, int udpport);
 
     [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
     extern static private void gub_pipeline_setup_decoding_clock(System.IntPtr p,
@@ -73,7 +74,7 @@ public class GstUnityBridgePipeline
         int net_clock_port,
         ulong basetime,
         float crop_left, float crop_top, float crop_right, float crop_bottom,
-        bool isDvbWc);
+		int useudpsrc, int udpport, bool isDvbWc);
 
     [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
     extern static private int gub_pipeline_grab_frame(System.IntPtr p, ref int w, ref int h);
@@ -190,15 +191,15 @@ public class GstUnityBridgePipeline
             userdata);
     }
 
-    internal void SetupDecoding(string uri, int video_index, int audio_index, string net_clock_address, int net_clock_port, ulong basetime, float crop_left, float crop_top, float crop_right, float crop_bottom, bool isDvbWc = false)
+	internal void SetupDecoding(string uri, int video_index, int audio_index, string net_clock_address, int net_clock_port, ulong basetime, float crop_left, float crop_top, float crop_right, float crop_bottom, int useudpsrc, int udpport, bool isDvbWc = false)
     {
         if (isDvbWc)
         {
-            gub_pipeline_setup_decoding_clock(m_Instance, uri, video_index, audio_index, net_clock_address, net_clock_port, basetime, crop_left, crop_top, crop_right, crop_bottom, isDvbWc);
+			gub_pipeline_setup_decoding_clock(m_Instance, uri, video_index, audio_index, net_clock_address, net_clock_port, basetime, crop_left, crop_top, crop_right, crop_bottom, useudpsrc, udpport, isDvbWc);
         }
         else
         {
-            gub_pipeline_setup_decoding(m_Instance, uri, video_index, audio_index, net_clock_address, net_clock_port, basetime, crop_left, crop_top, crop_right, crop_bottom);
+            gub_pipeline_setup_decoding(m_Instance, uri, video_index, audio_index, net_clock_address, net_clock_port, basetime, crop_left, crop_top, crop_right, crop_bottom, useudpsrc, udpport);
         }
     }
 
