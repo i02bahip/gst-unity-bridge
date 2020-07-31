@@ -36,3 +36,14 @@ DVB-CSS-WC support.
 # ACKNOWLEDGEMENT
 
 This software has been created within the [ImmersiaTV](http://immersiatv.eu) project. This project has received funding from the European Union�s Horizon 2020 research and innovation programme under grant agreement 688619.
+
+-----------------
+
+Unity
+udpsrc port=7000 ! application/x-rtp ! rtpjitterbuffer ! rtph264depay ! decodebin
+
+Windows
+gst-launch-1.0.exe udpsrc port=7000 ! application/x-rtp ! rtpjitterbuffer ! rtph264depay ! decodebin ! fpsdisplaysink sync=false
+
+Rasp
+raspivid -o - -t 0 -hf -w 640 -h 480 -b 1000000 -g 5 -ex antishake -fps 60 | gst-launch-1.0 -e fdsrc ! h264parse ! rtph264pay pt=96 config-interval=10 ! queue max-size-bytes=0 max-size-buffers=0 ! udpsink force-ipv4=true host=192.168.1.136 port=7000
