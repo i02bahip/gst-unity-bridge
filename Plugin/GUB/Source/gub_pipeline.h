@@ -58,11 +58,11 @@ EXPORT_API void gub_pipeline_set_position(GUBPipeline *pipeline, double position
 
 EXPORT_API void gub_pipeline_setup_decoding_clock(GUBPipeline *pipeline, const gchar *uri, int video_index, int audio_index,
     const gchar *net_clock_addr, int net_clock_port, guint64 basetime,
-    float crop_left, float crop_top, float crop_right, float crop_bottom, gboolean isDvbWc);
+    float crop_left, float crop_top, float crop_right, float crop_bottom, int useudpsrc, gint udpport, gboolean isDvbWc);
 
 EXPORT_API void gub_pipeline_setup_decoding(GUBPipeline *pipeline, const gchar *uri, int video_index, int audio_index,
 	const gchar *net_clock_addr, int net_clock_port, guint64 basetime,
-	float crop_left, float crop_top, float crop_right, float crop_bottom);
+	float crop_left, float crop_top, float crop_right, float crop_bottom, int useudpsrc, gint udpport);
 
 EXPORT_API gint32 gub_pipeline_grab_frame(GUBPipeline *pipeline, int *width, int *height);
 
